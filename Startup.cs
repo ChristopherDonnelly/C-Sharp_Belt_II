@@ -48,8 +48,8 @@ namespace C_Sharp_Belt_II
             {
                 routes.MapRoute("default", "{controller=User}/{action=Login}");
                 routes.MapRoute(
-                    name: "belt",
-                    template: "{controller=Belt}/{action=Belt}/{id?}");
+                    name: "home",
+                    template: "{controller=Home}/{action=bright_ideas}/{id?}");
             });
         }
     }
