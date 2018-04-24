@@ -135,16 +135,6 @@ namespace C_Sharp_Belt_II.Controllers
             }
         }
 
-        [Route("{*url}")]
-        public IActionResult Error()
-        {
-            Response.StatusCode = 404;
-            
-            return View(new ErrorViewModel{
-                RequestId = "404"
-            });
-        }
-
         private void setSessionViewData()
         {
             ViewData["Username"] = HttpContext.Session.GetString("UserName");
