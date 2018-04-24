@@ -20,7 +20,7 @@ namespace C_Sharp_Belt_II.Controllers
         {
             _context = context;
             _controller = "Home";
-            _action = "Login";
+            _action = "Home";
         }
 
         [HttpGet]
@@ -57,7 +57,7 @@ namespace C_Sharp_Belt_II.Controllers
                 return RedirectToAction(_action, _controller);
             }
 
-            return View("LogReg", new LogRegBundleModel());
+            return View("LogReg", new LogRegBundleModel{ Login = model });
         }
 
         [HttpGet]
@@ -86,7 +86,7 @@ namespace C_Sharp_Belt_II.Controllers
                 }
             }
 
-            return View("LogReg", new LogRegBundleModel());
+            return View("LogReg", new LogRegBundleModel{ Register = model });
         }
 
         [HttpGet]
