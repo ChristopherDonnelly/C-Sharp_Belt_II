@@ -20,7 +20,7 @@ namespace C_Sharp_Belt_II.Controllers
         {
             _context = context;
             _controller = "Home";
-            _action = "Home";
+            _action = "Login";
         }
 
         [HttpGet]
