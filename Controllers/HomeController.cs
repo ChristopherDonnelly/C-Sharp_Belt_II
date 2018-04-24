@@ -24,125 +24,112 @@ namespace C_Sharp_Belt_II.Controllers
         }
 
         [HttpGet]
-        [Route("Home")]
-        public IActionResult Home()
+        [Route("bright_ideas")]
+        public IActionResult bright_ideas()
         {
             if(isLoggedIn()){
                 setSessionViewData();
-
-                // User user = _context.users.Include( j => j.JoinedActivities ).ThenInclude( p => p.ActivityInfo ).SingleOrDefault(u => u.UserId == (int)ViewData["UserId"]);
-                // List<Activities> activityInfo = _context.activites.Include( j => j.JoinedUsers ).Include( u => u.CreatedBy ).OrderBy( d => d.EventDate ).ToList();
                 
-                return View();
-				// return View(new UserActivityBundleModel{ User = user, Activities = activityInfo });
-            }else{
-                return RedirectToAction(_action, _controller);
-            }
-        }
-
-        [HttpGet]
-        [Route("New")]
-        public IActionResult New()
-        {
-            if(isLoggedIn()){
-                return View();
-				// return View(new Activities());
+                return View(new IdeaBundleModel(_context));
             }else{
                 return RedirectToAction(_action, _controller);
             }
         }
 
         [HttpPost]
-        [Route("CreateActivity")]
-        // public IActionResult CreateRecord(Records recordInfo){
-        public IActionResult CreateRecord(){
+        [Route("CreateIdea")]
+        public IActionResult CreateIdea(Ideas idea){
             if(isLoggedIn()){
+                setSessionViewData();
+
                 if(ModelState.IsValid){
-                    setSessionViewData();
 
-                    // User user = _context.users.Include( j => j.JoinedActivities ).ThenInclude( p => p.ActivityInfo ).SingleOrDefault(u => u.UserId == (int)ViewData["UserId"]);
-
-                    // DateTime combined = activityInfo.EventDate.Date.Add(activityInfo.EventTime.TimeOfDay);
-
-                    // activityInfo.EventDate = combined;
-                    // activityInfo.EventTime = combined;
-                    // activityInfo.CreatedBy = user;
-                    // _context.activites.Add(activityInfo);
-                    // _context.user_activity.Add(new UserActivity{ ActivityId = activityInfo.ActivityId, ActivityInfo = activityInfo, JoinedUserId = user.UserId, JoinedUser = user });
-                    // _context.SaveChanges();
-
-                    // return RedirectToAction("RecordsDetails", new { RecordId = recordInfo.RecordId });
-                    return RedirectToAction("RecordsDetails");
+                    User user = _context.users.Include( j => j.Likes ).ThenInclude( p => p.LikedIdea ).SingleOrDefault(u => u.UserId == (int)ViewData["UserId"]);
+                    
+                    idea.IdeaCreator = user;
+                    _context.ideas.Add(idea);
+                    _context.SaveChanges();
                 }
             }else{
                 return RedirectToAction(_action, _controller);
             }
 
-            return View("New");
-            // return View("New", recordInfo);
+            return View("bright_ideas", new IdeaBundleModel(_context));
         }
 
         [HttpGet]
-        [Route("RecordsDetails/{RecordId}")]
-        public IActionResult ActivityDetails(int ActivityId){
+        [Route("bright_ideas/{IdeaId}")]
+        public IActionResult bright_ideas(int IdeaId){
             if(isLoggedIn()){
                 setSessionViewData();
 
-                // User user = _context.users.Include( j => j.JoinedActivities ).ThenInclude( p => p.ActivityInfo ).SingleOrDefault(u => u.UserId == (int)ViewData["UserId"]);
-                // Activities activityInfo = _context.activites.Include( u => u.JoinedUsers ).ThenInclude( g => g.JoinedUser ).SingleOrDefault(u => u.ActivityId == ActivityId);
+                Ideas idea = _context.ideas.Include( l => l.Likes ).ThenInclude( u => u.LikedUser ).Include( c => c.IdeaCreator ).SingleOrDefault(i => i.IdeaId == IdeaId);
 
-                // if(activityInfo != null){
-                //     return View(new UserActivityBundleModel{ Activity = activityInfo, User = user });
-                // }else{
-                //     return RedirectToAction("Home");
-                // }
-                return RedirectToAction("Home");
+                if(idea != null){
+                    if(idea.Likes != null){
+                        idea.Likes = idea.Likes.GroupBy(a => a.LikedUser.Alias).Select(g => g.First()).ToList();
+                    }
+
+                    return View("like_status", idea);
+                }else{
+                    return View("bright_ideas", new IdeaBundleModel(_context));
+                }
             }else{
                 return RedirectToAction(_action, _controller);
             }
         }
 
         [HttpGet]
-        [Route("Delete/{ActivityId}/{location}")]
-        public IActionResult Delete(int ActivityId, string location){
+        [Route("users/{UserId}")]
+        public IActionResult users(int UserId){
             if(isLoggedIn()){
                 setSessionViewData();
 
-                // Activities activityInfo = _context.activites.SingleOrDefault(u => u.ActivityId == ActivityId);
+                User user = _context.users.Include( l => l.Likes ).Include( i => i.Ideas ).SingleOrDefault(u => u.UserId == UserId);
+                
+                if(user != null){
+                    return View(user);
+                }else{
+                    return RedirectToAction("bright_ideas");
+                }
+            }else{
+                return RedirectToAction(_action, _controller);
+            }
+        }
 
-                // if(activityInfo != null){
-                //     if(activityInfo.CreatedById == (int)ViewData["UserId"]){
-                //         _context.activites.Remove(activityInfo);   
-                //         _context.SaveChanges();
 
-                //         return RedirectToAction("Home");
-                //     }
-                // }
+        [HttpGet]
+        [Route("Delete/{IdeaId}")]
+        public IActionResult Delete(int IdeaId){
+            if(isLoggedIn()){
+                setSessionViewData();
 
-                return RedirectToAction(location);
+                Ideas idea = _context.ideas.SingleOrDefault(u => u.IdeaId == IdeaId);
+
+                if(idea != null){
+                    if(idea.IdeaCreatorId == (int)ViewData["UserId"]){
+                        _context.ideas.Remove(idea);   
+                        _context.SaveChanges();
+                    }
+                }
+
+                return View("bright_ideas", new IdeaBundleModel(_context));
             }else{
                 return RedirectToAction(_action, _controller);
             }
         }
 
         [HttpGet]
-        [Route("JoinLeave/{RecordId}/{location}")]
-        public IActionResult JoinLeave(int RecordId, string location)
+        [Route("Like/{IdeaId}")]
+        public IActionResult Like(int IdeaId)
         {
             if(isLoggedIn()){
                 setSessionViewData();
 
-                // UserActivity userActivity = _context.user_activity.Where(p => p.ActivityId == ActivityId).SingleOrDefault(u => u.JoinedUserId == (int)ViewData["UserId"]);
+                _context.likes.Add(new Likes{ IdeaId = IdeaId, UserId = (int)ViewData["UserId"] });
+                _context.SaveChanges();
 
-                // if(userActivity != null){
-                //     _context.user_activity.Remove(userActivity);
-                // }else{
-                //     _context.user_activity.Add(new UserActivity{ ActivityId = ActivityId, JoinedUserId = (int)ViewData["UserId"] });
-                // }
-
-                // _context.SaveChanges();
-
-                return RedirectToAction(location);
+                return View("bright_ideas", new IdeaBundleModel(_context));
             }else{
                 return RedirectToAction(_action, _controller);
             }

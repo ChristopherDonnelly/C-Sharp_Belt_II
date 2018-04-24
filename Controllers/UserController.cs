@@ -20,7 +20,7 @@ namespace C_Sharp_Belt_II.Controllers
         {
             _context = context;
             _controller = "Home";
-            _action = "Home";
+            _action = "bright_ideas";
         }
 
         [HttpGet]
@@ -99,7 +99,7 @@ namespace C_Sharp_Belt_II.Controllers
 
         public void saveSession(User user){
             HttpContext.Session.SetInt32("UserId", (int)user.UserId);
-            HttpContext.Session.SetString("UserName", (string)user.FirstName);
+            HttpContext.Session.SetString("UserName", (string)user.Alias);
         }
 
         public bool isLoggedIn(){

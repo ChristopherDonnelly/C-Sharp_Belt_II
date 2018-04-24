@@ -6,17 +6,17 @@ namespace C_Sharp_Belt_II.Models
 {
     public class RegisterViewModel : BaseEntity
     {
-        [Display(Name = "First Name: ")]
-        [Required(ErrorMessage = "First Name is required!")]
-        [MinLength(2, ErrorMessage = "First Name must contain at least 2 characters!")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "First Name can only contain letters!")]
-        public string FirstName { get; set; }
+        [Display(Name = "Name: ")]
+        [Required(ErrorMessage = "Name is required!")]
+        [MinLength(2, ErrorMessage = "Name must contain at least 2 characters!")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Name can only contain letters!")]
+        public string Name { get; set; }
 
-        [Display(Name = "Last Name: ")]
-        [Required(ErrorMessage = "Last Name is required!")]
-        [MinLength(2, ErrorMessage = "Last Name must contain at least 2 characters!")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Last Name can only contain letters!")]
-        public string LastName { get; set; }
+        [Display(Name = "Alias: ")]
+        [Required(ErrorMessage = "Alias is required!")]
+        [MinLength(2, ErrorMessage = "Alias must contain at least 2 characters!")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Alias can only contain letters!")]
+        public string Alias { get; set; }
  
         [Display(Name = "Email: ")]
         [Required(ErrorMessage = "Email is required!")]
@@ -27,7 +27,7 @@ namespace C_Sharp_Belt_II.Models
         [Display(Name = "Password: ")]
         [Required(ErrorMessage = "Password is required!")]
         [MinLength(8, ErrorMessage = "Password must be at least 8 characters!")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}", ErrorMessage = "Password must contain at least 1 number, 1 uppercase, 1 lowercase, and 1 special character!")]
+        // [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}", ErrorMessage = "Password must contain at least 1 number, 1 uppercase, 1 lowercase, and 1 special character!")]
         // [RegularExpression(@"^((?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])|(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^a-zA-Z0-9])|(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])|(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])).{8,}$", ErrorMessage = "Passwords must be at least 8 characters and contain at 3 of 4 of the following: upper case (A-Z), lower case (a-z), number (0-9) and special character (e.g. !@#$%^&*)")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
@@ -42,8 +42,8 @@ namespace C_Sharp_Belt_II.Models
         public User createUser(BeltExamContext _context){
             
             User newUser = new User{
-                FirstName = this.FirstName,
-                LastName = this.LastName,
+                Name = this.Name,
+                Alias = this.Alias,
                 Email = this.Email,
                 Password = this.Password
             };

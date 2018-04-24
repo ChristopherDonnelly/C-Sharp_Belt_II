@@ -9,14 +9,14 @@
         <form asp-controller="User" asp-action="Register" method="post" class="form-control">
             <h2 class="text-center">@ViewData["Title"]</h2>
             <div class="col-12 d-inline-block p-0 align-text-top my-2">
-            	<label asp-for="FirstName" class="d-inline-block col-3 p-0 text-right"></label>
-            	<input asp-for="FirstName" class="form-control d-inline-block col-8 m-auto" placeholder="Enter First Name" aria-label="Enter First Name" />
-                <span asp-validation-for="FirstName" class="d-block pl-3 offset-3 text-danger"></span>
+            	<label asp-for="Name" class="d-inline-block col-3 p-0 text-right"></label>
+            	<input asp-for="Name" class="form-control d-inline-block col-8 m-auto" placeholder="Enter Name" aria-label="Enter Name" />
+                <span asp-validation-for="Name" class="d-block pl-3 offset-3 text-danger"></span>
 	    	</div>
             <div class="col-12 d-inline-block p-0 align-text-top my-2">
-            	<label asp-for="LastName" class="d-inline-block col-3 p-0 text-right"></label>
-            	<input asp-for="LastName" class="form-control d-inline-block col-8 m-auto" placeholder="Enter Last Name" aria-label="Enter Last Name" />
-                <span asp-validation-for="LastName" class="d-block pl-3 offset-3 text-danger"></span>
+            	<label asp-for="Alias" class="d-inline-block col-3 p-0 text-right"></label>
+            	<input asp-for="Alias" class="form-control d-inline-block col-8 m-auto" placeholder="Enter Alias" aria-label="Enter Alias" />
+                <span asp-validation-for="Alias" class="d-block pl-3 offset-3 text-danger"></span>
 	    	</div>
             <div class="col-12 d-inline-block p-0 align-text-top my-2">
             	<label asp-for="Email" class="d-inline-block col-3 p-0 text-right"></label>

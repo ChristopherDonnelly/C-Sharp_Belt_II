@@ -21,7 +21,11 @@
 <body>
     <div class="header">
         <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
-            <a class="navbar-brand" href="/Dashboard">Dojo Activity Center</a>
+            @{
+                if(@ViewData["Title"]=="Bright Ideas"){
+                    <a class="navbar-brand" href="/Home">Hi @ViewData["Username"]!</a>
+                }
+            }
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -30,22 +34,17 @@
                 <ul class="navbar-nav ml-auto">
                     @{ 
                         if(@ViewData["Title"]=="Login/Registration"){
+                            
+                        }else if(@ViewData["Title"]=="Bright Ideas"){
                             <li class="nav-item">
-                                <a class="nav-link disabled text-white" href="#">Welcome to the Dojo Activity Center</a>
-                            </li>
-                        }else if(@ViewData["Title"]=="Home"){
-                            <li class="nav-item">
-                                <a class="nav-link disabled text-white" href="#">Welcome, @ViewData["Username"]</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Logoff">Log off</a>
+                                <a class="nav-link" href="/Logoff">Logout</a>
                             </li>
                         }else{
                             <li class="nav-item">
-                                <a class="nav-link" href="/Home">Home</a>
+                                <a class="nav-link" href="/bright_ideas">Bright Ideas</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/Logoff">Log off</a>
+                                <a class="nav-link" href="/Logoff">Logout</a>
                             </li>
                         }
                     }

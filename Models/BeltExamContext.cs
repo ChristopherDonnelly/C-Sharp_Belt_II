@@ -8,7 +8,7 @@ namespace C_Sharp_Belt_II.Models
 
         public DbSet<User> users { get; set; }
 
-        // public DbSet<Activities> activites { get; set; }
-        // public DbSet<UserActivity> user_activity { get; set; }
+        public DbSet<Ideas> ideas { get; set; }
+        public DbSet<Likes> likes { get; set; }
     }
 }
