@@ -9,13 +9,13 @@ namespace C_Sharp_Belt_II.Models
         [Display(Name = "Name: ")]
         [Required(ErrorMessage = "Name is required!")]
         [MinLength(2, ErrorMessage = "Name must contain at least 2 characters!")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Name can only contain letters!")]
+        [RegularExpression(@"^[a-zA-Z ]+$", ErrorMessage = "Name can only contain letters!")]
         public string Name { get; set; }
 
         [Display(Name = "Alias: ")]
         [Required(ErrorMessage = "Alias is required!")]
         [MinLength(2, ErrorMessage = "Alias must contain at least 2 characters!")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Alias can only contain letters!")]
+        [RegularExpression(@"^[a-zA-Z ]+$", ErrorMessage = "Alias can only contain letters!")]
         public string Alias { get; set; }
  
         [Display(Name = "Email: ")]
